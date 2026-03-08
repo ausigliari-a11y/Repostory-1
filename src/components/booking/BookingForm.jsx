@@ -97,7 +97,11 @@ export const BookingForm = () => {
     const driver = MOCK_DRIVERS[0];
     const route = `${pickup} → ${dropoff}`;
     try {
-      const res = await fetch('http://localhost:3001/api/send-receipt', {
+      const apiUrl = window.location.hostname === 'localhost' 
+        ? 'http://localhost:3001/api/send-receipt'
+        : 'https://api.lombardia-ncc-class.it/api/send-receipt';
+
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
