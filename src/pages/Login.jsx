@@ -48,7 +48,7 @@ export const Login = () => {
             <Input 
               label="Email Address" 
               type="email" 
-              placeholder="admin@ncc.it"
+              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -57,7 +57,7 @@ export const Login = () => {
             <Input 
               label="Password" 
               type="password" 
-              placeholder="••••••••"
+              placeholder="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -69,12 +69,6 @@ export const Login = () => {
               {loading ? <Loader2 className="animate-spin" /> : "Sign In"}
             </Button>
           </form>
-
-          <div className="mt-6 text-center text-xs text-slate-500">
-            <p>Demo Credentials:</p>
-            <p>Email: admin@ncc.it</p>
-            <p>Password: admin123</p>
-          </div>
         </div>
       </div>
 
