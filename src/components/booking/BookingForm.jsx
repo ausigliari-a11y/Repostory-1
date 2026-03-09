@@ -32,6 +32,7 @@ export const BookingForm = () => {
   const [customerEmail, setCustomerEmail] = useState('');
   const [currentBookingId, setCurrentBookingId] = useState(null);
   const [sendingReceipt, setSendingReceipt] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const handleCalculate = (e) => {
     e.preventDefault();
@@ -46,6 +47,11 @@ export const BookingForm = () => {
 
   const handleBookNow = () => {
     if (!selectedVehicle || !priceData?.price) return;
+
+    if (!agreedToTerms) {
+      alert('Per procedere è necessario confermare di avere almeno 18 anni.');
+      return;
+    }
 
     const message = generateMessage();
     const driver = MOCK_DRIVERS[0];
@@ -212,13 +218,24 @@ export const BookingForm = () => {
                   <VehicleList />
                   
                   {selectedVehicle && (
-                    <div className="mt-8 pt-6 border-t border-navy-700 flex justify-end">
-                      <Button 
-                        onClick={handleBookNow} 
-                        className="w-full md:w-auto text-lg px-8"
-                      >
-                        Book Now - €{priceData?.price}
-                      </Button>
+                    <div className="mt-8 pt-6 border-t border-navy-700">
+                      <div className="flex items-start gap-3 mb-6 p-4 bg-navy-900/50 rounded-lg border border-navy-700 hover:border-gold-500/50 transition-colors cursor-pointer" onClick={() => setAgreedToTerms(!agreedToTerms)}>
+                        <div className={`mt-1 flex-shrink-0 w-5 h-5 rounded border flex items-center justify-center transition-colors ${agreedToTerms ? 'bg-gold-500 border-gold-500' : 'border-slate-600'}`}>
+                          {agreedToTerms && <Check className="w-3.5 h-3.5 text-navy-900" />}
+                        </div>
+                        <p className="text-sm text-slate-300 leading-relaxed">
+                          Confermo di aver letto e accettato i <span className="text-gold-500 font-medium">Termini e Condizioni</span> e dichiaro di avere <span className="text-gold-500 font-medium">almeno 18 anni</span>.
+                        </p>
+                      </div>
+                      <div className="flex justify-end">
+                        <Button 
+                          onClick={handleBookNow} 
+                          className="w-full md:w-auto text-lg px-8"
+                          disabled={!agreedToTerms}
+                        >
+                          Book Now - €{priceData?.price}
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </div>
