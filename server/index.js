@@ -3,8 +3,18 @@ import nodemailer from 'nodemailer';
 import cors from 'cors';
 
 const app = express();
+
+app.use(cors({ 
+  origin: [
+    'http://localhost:5173', 
+    'https://www.lombardia-ncc-class.it', 
+    'https://lombardia-ncc-class.it'
+  ],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}));
+
 app.use(express.json());
-app.use(cors());
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
